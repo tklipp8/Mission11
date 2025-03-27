@@ -16,9 +16,15 @@ namespace Mission11.API.Controllers
 
         // Endpoint to get paginated and sorted list of books
         [HttpGet("AllBooks")]
-        public IActionResult GetBooks(int pageSize, int pageNum, string sortOrder = "asc")
+        public IActionResult GetBooks(int pageSize, int pageNum = 1, string sortOrder = "asc", [FromQuery] List<string> bookCategories = null)
         {
             var query = _bookContext.Books.AsQueryable(); // Get all books as a queryable object
+
+            if (bookCategories != null && bookCategories.Any())
+            {
+                // Filter books based on the provided categories
+                query = query.Where(x => bookCategories.Contains(x.Category));
+            }
 
             // Apply sorting based on the sortOrder parameter
             if (sortOrder == "asc")
@@ -49,6 +55,16 @@ namespace Mission11.API.Controllers
             };
 
             return Ok(bookObject); // Return the response as HTTP 200 OK
+        }
+
+        [HttpGet("GetBookCategories")]
+        public IActionResult GetBookCategories()
+        {
+            var bookCategories = _bookContext.Books
+                .Select(b => b.Category)
+                .Distinct()
+                .ToList();
+            return Ok(bookCategories);
         }
     }
 }

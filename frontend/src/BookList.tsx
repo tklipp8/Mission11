@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Book } from "./types/Book";
 
-function BookList() {
+function BookList({selectedCategories}: {selectedCategories: string[]}) {
     // Set our constants so we can get all of the books, dynamic page size, page num, total pages, and so we can change the sort order.
     const [books, setBooks] = useState<Book[]>([]);
     const [pageSize, setPageSize] = useState<number>(5);
@@ -12,8 +12,13 @@ function BookList() {
     // Bring in the use effect, establish our url and other functions
     useEffect(() => {
         const fetchBooks = async () => {
+
+            const categoryParams = selectedCategories
+            .map((cat) => `bookCategories=${encodeURIComponent(cat)}`)
+            .join('&');
+
             const response = await fetch(
-                `https://localhost:5000/Book/AllBooks?pageSize=${pageSize}&pageNum=${pageNum}&sortOrder=${sortOrder}`
+                `https://localhost:5000/Book/AllBooks?pageSize=${pageSize}&pageNum=${pageNum}&sortOrder=${sortOrder}${selectedCategories.length ? `&${categoryParams}` : ''}`
             );
             const data = await response.json();
             setBooks(data.books);
@@ -21,7 +26,7 @@ function BookList() {
         };
 
         fetchBooks();
-    }, [pageSize, pageNum, sortOrder]);
+    }, [pageSize, pageNum, sortOrder, selectedCategories]);
 
     // Function to toggle sorting order
     const toggleSortOrder = () => {
@@ -30,9 +35,6 @@ function BookList() {
 
     return (
         <>
-            <h1>Bookstore</h1>
-            <br />
-
             {/* Sorting Button */}
             <button className="btn btn-primary mb-3" onClick={toggleSortOrder}>
                 Sort by Title {sortOrder === "asc" ? "🔼" : "🔽"}
