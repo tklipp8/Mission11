@@ -1,35 +1,33 @@
-import { useState } from 'react';
-import './App.css'
-import BookList from './BookList'
-import CategoryFilter from './CategoryFilter'
-import WelcomeBand from './WelcomeBand'
+import './App.css' // Importing the main CSS file for styling
+import BookstorePage from './pages/BookstorePage' // Importing the BookstorePage component
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom' // Importing React Router components for navigation
+import PurchasePage from './pages/PurchasePage' // Importing the PurchasePage component
+import CartPage from './pages/CartPage' // Importing the CartPage component
+import { CartProvider } from './context/CartContext' // Importing the CartProvider for managing cart state globally
 
 function App() {
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+
 
   return (
     <>
-    <div className='container mt-4'>
-      <div className='row bg-primary text-white'>
-        <WelcomeBand />
-      </div>
-      <div className='row'>
-        <div className='col-md-3'>
-          <CategoryFilter
-            selectedCategories={selectedCategories}
-            setSelectedCategories={setSelectedCategories}
-          />
-        </div>
-        <div className='col-md-9'>
-          <BookList selectedCategories={selectedCategories} />
-        </div>
-      </div>
-    </div>
-
-      {/* Include the booklist component so that it displays */}
-
+    {/* Wrapping the application with CartProvider to provide cart context to all components */}
+    <CartProvider>
+      {/* Wrapping the application with Router to enable routing */}
+      <Router>
+        <Routes>
+          {/* Route for the homepage, rendering the BookstorePage component */}
+          <Route path="/" element={<BookstorePage/>} />
+          {/* Route for the bookstore page, also rendering the BookstorePage component */}
+          <Route path="/bookstore" element={<BookstorePage/>} />
+          {/* Route for the purchase page, rendering the PurchasePage component with dynamic parameters */}
+          <Route path="/purchase/:title/:bookID/:price" element={<PurchasePage/>} />
+          {/* Route for the cart page, rendering the CartPage component */}
+          <Route path='/cart' element={<CartPage/>} />
+        </Routes>
+      </Router>
+    </CartProvider>
     </>
   )
 }
 
-export default App
+export default App // Exporting the App component as the default export
