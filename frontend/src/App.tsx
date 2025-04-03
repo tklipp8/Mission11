@@ -3,6 +3,7 @@ import BookstorePage from './pages/BookstorePage' // Importing the BookstorePage
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom' // Importing React Router components for navigation
 import PurchasePage from './pages/PurchasePage' // Importing the PurchasePage component
 import CartPage from './pages/CartPage' // Importing the CartPage component
+import BookManagementPage from './pages/BookManagementPage' // Importing the BookManagementPage component
 import { CartProvider } from './context/CartContext' // Importing the CartProvider for managing cart state globally
 
 function App() {
@@ -23,6 +24,8 @@ function App() {
           <Route path="/purchase/:title/:bookID/:price" element={<PurchasePage/>} />
           {/* Route for the cart page, rendering the CartPage component */}
           <Route path='/cart' element={<CartPage/>} />
+          {/* Route for the book management page */}
+          <Route path='/manage-books' element={<BookManagementPage/>} />
         </Routes>
       </Router>
     </CartProvider>

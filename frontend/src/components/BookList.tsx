@@ -13,23 +13,23 @@ function BookList({selectedCategories}: {selectedCategories: string[]}) {
 
     // Bring in the use effect, establish our url and other functions
     useEffect(() => {
-        const fetchBooks = async () => {
-            // Construct query parameters for selected categories
-            const categoryParams = selectedCategories
+        fetchBooks();
+    }, [pageSize, pageNum, sortOrder, selectedCategories]); // Dependencies for useEffect
+
+    const fetchBooks = async () => {
+        // Construct query parameters for selected categories
+        const categoryParams = selectedCategories
             .map((cat) => `bookCategories=${encodeURIComponent(cat)}`)
             .join('&');
 
-            // Fetch books from the backend API with pagination and sorting
-            const response = await fetch(
-                `https://localhost:5000/Book/AllBooks?pageSize=${pageSize}&pageNum=${pageNum}&sortOrder=${sortOrder}${selectedCategories.length ? `&${categoryParams}` : ''}`         
-            );
-            const data = await response.json();
-            setBooks(data.books); // Update the books state with fetched data
-            setTotalPages(data.totalPages); // Update the total pages state
-        };
-
-        fetchBooks(); // Call the fetchBooks function whenever dependencies change
-    }, [pageSize, pageNum, sortOrder, selectedCategories]); // Dependencies for useEffect
+        // Fetch books from the backend API with pagination and sorting
+        const response = await fetch(
+            `https://localhost:5000/Book/AllBooks?pageSize=${pageSize}&pageNum=${pageNum}&sortOrder=${sortOrder}${selectedCategories.length ? `&${categoryParams}` : ''}`         
+        );
+        const data = await response.json();
+        setBooks(data.books); // Update the books state with fetched data
+        setTotalPages(data.totalPages); // Update the total pages state
+    };
 
     // Function to toggle sorting order
     const toggleSortOrder = () => {
@@ -38,6 +38,14 @@ function BookList({selectedCategories}: {selectedCategories: string[]}) {
 
     return (
         <>
+            {/* Book Management Button */}
+            <button 
+                className="btn btn-primary mb-3" 
+                onClick={() => navigate('/manage-books')}
+            >
+                Manage Books
+            </button>
+
             {/* Sorting Button */}
             <br/>
             <button className="btn btn-secondary mb-3" onClick={toggleSortOrder}>

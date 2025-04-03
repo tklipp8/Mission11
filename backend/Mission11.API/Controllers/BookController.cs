@@ -66,6 +66,75 @@ namespace Mission11.API.Controllers
                 .ToList();
             return Ok(bookCategories);
         }
+
+        // Add a new book
+        [HttpPost("AddBook")]
+        public IActionResult AddBook([FromBody] Book book)
+        {
+            try
+            {
+                _bookContext.Books.Add(book);
+                _bookContext.SaveChanges();
+                return Ok(book);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Failed to add book: {ex.Message}");
+            }
+        }
+
+        // Update an existing book
+        [HttpPut("Update/{id}")]
+        public IActionResult UpdateBook(int id, [FromBody] Book book)
+        {
+            try
+            {
+                var existingBook = _bookContext.Books.Find(id);
+                if (existingBook == null)
+                {
+                    return NotFound($"Book with ID {id} not found");
+                }
+
+                // Update the existing book's properties
+                existingBook.Title = book.Title;
+                existingBook.Author = book.Author;
+                existingBook.Publisher = book.Publisher;
+                existingBook.ISBN = book.ISBN;
+                existingBook.Classification = book.Classification;
+                existingBook.Category = book.Category;
+                existingBook.PageCount = book.PageCount;
+                existingBook.Price = book.Price;
+
+                _bookContext.SaveChanges();
+                return Ok(existingBook);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Failed to update book: {ex.Message}");
+            }
+        }
+
+        // Delete a book
+        [HttpDelete("Delete/{id}")]
+        public IActionResult DeleteBook(int id)
+        {
+            try
+            {
+                var book = _bookContext.Books.Find(id);
+                if (book == null)
+                {
+                    return NotFound($"Book with ID {id} not found");
+                }
+
+                _bookContext.Books.Remove(book);
+                _bookContext.SaveChanges();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Failed to delete book: {ex.Message}");
+            }
+        }
     }
 }
 
