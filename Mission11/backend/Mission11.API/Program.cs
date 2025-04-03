@@ -19,6 +19,7 @@ builder.Services.AddCors(options =>
         policy =>
         {
             policy.WithOrigins(
+                "http://localhost:3000",
                 "https://zealous-field-0c234c51e.6.azurestaticapps.net"
             )
             .AllowCredentials()
@@ -36,12 +37,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
+// Make sure CORS is called before other middleware
 app.UseCors("AllowFrontend");
+
+app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+app.Run(); 
