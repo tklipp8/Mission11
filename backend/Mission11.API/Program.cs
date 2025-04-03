@@ -18,10 +18,13 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontend",
         policy =>
         {
-            policy.WithOrigins("http://localhost:3000","https://mission13-lloyd-backend-gmh5b6aadncpenec.eastus-01.azurewebsites.net")
-                .AllowCredentials()
-                .AllowAnyHeader()
-                .AllowAnyMethod();
+            policy.WithOrigins(
+                "http://localhost:3000",
+                "https://green-bay-03ceb0a1e.6.azurestaticapps.net"
+            )
+            .AllowCredentials()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
         });
 });
 
