@@ -20,7 +20,9 @@ builder.Services.AddCors(options =>
         {
             policy.WithOrigins(
                 "http://localhost:3000",
-                "https://green-bay-03ceb0a1e.6.azurestaticapps.net"
+                "https://green-bay-03ceb0a1e.6.azurestaticapps.net",
+                "https://zealous-field-0c234c51e.6.azurestaticapps.net",
+                "https://lloyd-backend-e2aneebua8acarcc.eastus-01.azurewebsites.net"
             )
             .AllowCredentials()
             .AllowAnyHeader()
