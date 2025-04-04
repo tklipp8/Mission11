@@ -12,6 +12,7 @@ namespace Mission11.API.Data
         public string Author { get; set; }
         [Required]
         public string Publisher { get; set; }
+        [Required]
         public string ISBN { get; set; }
         [Required]
         public string Classification { get; set; }
@@ -21,6 +22,5 @@ namespace Mission11.API.Data
         public int PageCount { get; set; }
         [Required]
         public double Price { get; set; }
-
     }
 }

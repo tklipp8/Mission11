@@ -18,13 +18,11 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontend",
         policy =>
         {
-            policy.WithOrigins(
-                "https://zealous-field-0c234c51e.6.azurestaticapps.net"
-            )
-            .AllowCredentials()
+            policy.AllowAnyOrigin()
             .AllowAnyHeader()
             .AllowAnyMethod();
-        });
+        }
+    );
 });
 
 var app = builder.Build();
@@ -36,9 +34,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
 app.UseCors("AllowFrontend");
+
+app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
