@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import './CategoryFilter.css'
+import { fetchBookCategories } from "../api/BooksAPI";
 
 // This component renders a category filter with checkboxes for each category.
 // It fetches the list of categories from an API and allows users to select/deselect categories.
@@ -14,29 +15,25 @@ function CategoryFilter ({
 
     // Fetches the list of book categories from the API when the component mounts.
     useEffect(() => {
-        const fetchCategories = async () =>{
+        const loadCategories = async () => {
             try {
-                const response = await fetch(
-                    'https://mission13-lloyd-backend-gmh5b6aadncpenec.eastus-01.azurewebsites.net/Book/GetBookCategories'
-                );
-                const data = await response.json();
-                console.log('Fetched categories:', data); // Logs the fetched categories for debugging.
-                setCategories(data);                
+                const data = await fetchBookCategories();
+                setCategories(data);
             } catch (error) {
-                console.error('Error fetching categories', error) // Logs any errors that occur during the fetch.
+                console.error('Error fetching categories:', error);
             }
         };
 
-        fetchCategories();
+        loadCategories();
     }, []);
 
     // Handles the checkbox change event to update the selected categories.
-    function handleCheckboxChange ({target}: {target: HTMLInputElement}) {
+    function handleCheckboxChange({target}: {target: HTMLInputElement}) {
         const updatedCategories = selectedCategories.includes(target.value)
-        ? selectedCategories.filter(x => x !== target.value) // Removes the category if it is already selected.
-        : [...selectedCategories, target.value] // Adds the category if it is not already selected.
+            ? selectedCategories.filter(x => x !== target.value)
+            : [...selectedCategories, target.value];
 
-        setSelectedCategories(updatedCategories); // Updates the state with the new list of selected categories.
+        setSelectedCategories(updatedCategories);
     } 
 
     return (
@@ -48,7 +45,14 @@ function CategoryFilter ({
                 {categories.map((b) => (
                     <div key={b} className="category-item">
                         {/* Renders a checkbox for each category */}
-                        <input type='checkbox' id={b} value={b} className="category-checkbox" onChange={handleCheckboxChange} />
+                        <input 
+                            type='checkbox' 
+                            id={b} 
+                            value={b} 
+                            className="category-checkbox" 
+                            onChange={handleCheckboxChange}
+                            checked={selectedCategories.includes(b)}
+                        />
                         <label htmlFor={b}>{b}</label> {/* Displays the category name */}
                     </div>
                 ))}

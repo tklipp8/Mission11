@@ -3,7 +3,6 @@ import { Book } from "../types/Book";
 interface FetchBooksResponse {
     books: Book[];
     totalNumBooks: number;
-    totalPages: number;
 }
 
 const API_URL = "https://lloyd-backend-e2aneebua8acarcc.eastus-01.azurewebsites.net/Book";
@@ -19,16 +18,17 @@ export const fetchBooks = async (
             .map((cat) => `bookCategories=${encodeURIComponent(cat)}`)
             .join('&');
 
-        const response = await fetch(
-            `${API_URL}/AllBooks?pageSize=${pageSize}&pageNum=${pageNum}&sortOrder=${sortOrder}${selectedCategories.length ? `&${categoryParams}` : ''}`,
-            {
-                credentials: 'include',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }
+        const fullUrl = `${API_URL}/AllBooks?pageSize=${pageSize}&pageNum=${pageNum}` +
+            (sortOrder ? `&sortOrder=${encodeURIComponent(sortOrder)}` : '') +
+            (selectedCategories.length ? `&${categoryParams}` : '');
+
+        const response = await fetch(fullUrl, {
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             }
-        );
+        });
 
         if (!response.ok) {
             throw new Error(`Failed to fetch books`);
