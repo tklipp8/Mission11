@@ -24,7 +24,7 @@ function BookList({selectedCategories}: {selectedCategories: string[]}) {
 
         // Fetch books from the backend API with pagination and sorting
         const response = await fetch(
-            `https://localhost:5000/Book/AllBooks?pageSize=${pageSize}&pageNum=${pageNum}&sortOrder=${sortOrder}${selectedCategories.length ? `&${categoryParams}` : ''}`         
+            `https://lloyd-backend-e2aneebua8acarcc.eastus-01.azurewebsites.net/Book/AllBooks?pageSize=${pageSize}&pageNum=${pageNum}&sortOrder=${sortOrder}${selectedCategories.length ? `&${categoryParams}` : ''}`         
         );
         const data = await response.json();
         setBooks(data.books); // Update the books state with fetched data
