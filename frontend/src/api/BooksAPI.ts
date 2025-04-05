@@ -5,7 +5,8 @@ interface FetchBooksResponse {
     totalNumBooks: number;
 }
 
-const API_URL = "https://lloyd-backend-e2aneebua8acarcc.eastus-01.azurewebsites.net/Book";
+// Use the correct URL for local development
+const API_URL = "https://localhost:5000/Book";
 
 export const fetchBooks = async (
     pageSize: number,
@@ -22,7 +23,10 @@ export const fetchBooks = async (
             (sortOrder ? `&sortOrder=${encodeURIComponent(sortOrder)}` : '') +
             (selectedCategories.length ? `&${categoryParams}` : '');
 
+        console.log("Fetching books from URL:", fullUrl);
+        
         const response = await fetch(fullUrl, {
+            method: 'GET',
             credentials: 'include',
             headers: {
                 'Accept': 'application/json',
@@ -31,8 +35,9 @@ export const fetchBooks = async (
         });
 
         if (!response.ok) {
-            throw new Error(`Failed to fetch books`);
+            throw new Error(`Failed to fetch books: ${response.status} ${response.statusText}`);
         }
+        
         return await response.json();
     } catch (error) {
         console.error("Error fetching books:", error);

@@ -70,3 +70,9 @@ C:\Users\turne\Desktop\Winter 2025\413\Mission11\backend\Mission11.API\obj\Debug
 C:\Users\turne\Desktop\Winter 2025\413\Mission11\backend\Mission11.API\obj\Debug\net8.0\Mission11.API.pdb
 C:\Users\turne\Desktop\Winter 2025\413\Mission11\backend\Mission11.API\obj\Debug\net8.0\Mission11.API.genruntimeconfig.cache
 C:\Users\turne\Desktop\Winter 2025\413\Mission11\backend\Mission11.API\obj\Debug\net8.0\ref\Mission11.API.dll
+C:\Users\turne\Desktop\Winter 2025\413\Mission11\backend\Mission11.API\bin\Debug\net8.0\publish\web.config
+C:\Users\turne\Desktop\Winter 2025\413\Mission11\backend\Mission11.API\bin\Debug\net8.0\publish\appsettings.Development.json
+C:\Users\turne\Desktop\Winter 2025\413\Mission11\backend\Mission11.API\bin\Debug\net8.0\publish\appsettings.json
+C:\Users\turne\Desktop\Winter 2025\413\Mission11\backend\Mission11.API\bin\Debug\net8.0\publish\Mission11.API.deps.json
+C:\Users\turne\Desktop\Winter 2025\413\Mission11\backend\Mission11.API\bin\Debug\net8.0\publish\Mission11.API.runtimeconfig.json
+C:\Users\turne\Desktop\Winter 2025\413\Mission11\backend\Mission11.API\bin\Debug\net8.0\publish\Mission11.API.staticwebassets.endpoints.json
