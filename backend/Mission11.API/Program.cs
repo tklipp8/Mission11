@@ -20,7 +20,7 @@ builder.Services.AddCors(options =>
         {
             policy.WithOrigins("https://calm-hill-03cf8f61e.6.azurestaticapps.net")
                   .AllowAnyHeader()
-                  .AllowAnyMethod()
+                  .AllowAnyMethod();
                 //   .AllowCredentials();
         }
     );
