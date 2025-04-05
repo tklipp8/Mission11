@@ -1,31 +1,33 @@
 import { useEffect, useState } from "react";
 import './CategoryFilter.css'
-import { fetchBookCategories } from "../api/BooksAPI";
+
 
 // This component renders a category filter with checkboxes for each category.
 // It fetches the list of categories from an API and allows users to select/deselect categories.
 
 function CategoryFilter ({
-    selectedCategories, setSelectedCategories,
-}: {
-    selectedCategories: string[];
-    setSelectedCategories: (categories: string[]) => void;
-}) {
-    const [categories, setCategories] = useState<string[]>([]);
+    selectedCategories,
+    setSelectedCategories,
+    }: {
+        selectedCategories: string[];
+        setSelectedCategories: (categories: string[]) => void;
+    }) {
+        const [categories, setCategories] = useState<string[]>([]);
 
-    // Fetches the list of book categories from the API when the component mounts.
-    useEffect(() => {
-        const loadCategories = async () => {
-            try {
-                const data = await fetchBookCategories();
-                setCategories(data);
-            } catch (error) {
-                console.error('Error fetching categories:', error);
+        useEffect(() => {
+            const fetchCategories = async () => {
+                try {
+                    const response = await fetch(`https://lloyd-backend-e2aneebua8acarcc.eastus-01.azurewebsites.net/Book/GetBookCategories`);
+                    const data = await response.json();
+                    setCategories(data);
+                }
+                catch (error) {
+                    console.error("Error fetching categories", error);
+                }
             }
-        };
 
-        loadCategories();
-    }, []);
+            fetchCategories();
+        }, []);
 
     // Handles the checkbox change event to update the selected categories.
     function handleCheckboxChange({target}: {target: HTMLInputElement}) {
