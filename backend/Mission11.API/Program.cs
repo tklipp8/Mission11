@@ -18,11 +18,10 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontend",
         policy =>
         {
-            policy.AllowAnyOrigin()
+            policy.WithOrigins("https://calm-hill-03cf8f61e.6.azurestaticapps.net")
                   .AllowAnyHeader()
                   .AllowAnyMethod()
-                  .AllowCredentials()
-                  .WithExposedHeaders("Access-Control-Allow-Origin");
+                  .AllowCredentials();
         }
     );
 });
