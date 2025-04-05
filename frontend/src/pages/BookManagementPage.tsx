@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Book } from '../types/Book';
-import { addBook, updateBook, deleteBook } from '../api/BooksAPI';
+import { addBook, updateBook, deleteBook, fetchBooks } from '../api/BooksAPI';
 
 function BookManagementPage() {
     const [books, setBooks] = useState<Book[]>([]);
@@ -24,20 +24,7 @@ function BookManagementPage() {
 
     const loadBooks = async () => {
         try {
-            const response = await fetch(
-                'https://lloyd-backend-e2aneebua8acarcc.eastus-01.azurewebsites.net/Book/AllBooks?pageSize=100&pageNum=1&sortOrder=asc',
-                {
-                    credentials: 'include',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    }
-                }
-            );
-            if (!response.ok) {
-                throw new Error('Failed to fetch books');
-            }
-            const data = await response.json();
+            const data = await fetchBooks(100, 1, 'asc', []);
             setBooks(data.books);
         } catch (error) {
             console.error('Error loading books:', error);
