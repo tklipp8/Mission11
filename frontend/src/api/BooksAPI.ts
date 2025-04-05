@@ -23,7 +23,7 @@ export const fetchBooks = async (
             (selectedCategories.length ? `&${categoryParams}` : '');
 
         const response = await fetch(fullUrl, {
-            credentials: 'include',
+            // credentials: 'include',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -43,7 +43,7 @@ export const fetchBooks = async (
 export const fetchBookCategories = async (): Promise<string[]> => {
     try {
         const response = await fetch(`${API_URL}/GetBookCategories`, {
-            credentials: 'include',
+            // credentials: 'include',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -66,7 +66,7 @@ export const addBook = async (newBook: Book): Promise<Book> => {
             headers: {
                 "Content-Type": "application/json",
             },
-            credentials: 'include',
+            // credentials: 'include',
             body: JSON.stringify(newBook),
         });
 
@@ -88,7 +88,7 @@ export const updateBook = async (bookId: number, updatedBook: Book): Promise<Boo
             headers: {
                 "Content-Type": "application/json",
             },
-            credentials: 'include',
+            // credentials: 'include',
             body: JSON.stringify(updatedBook),
         });
 
@@ -107,7 +107,7 @@ export const deleteBook = async (bookId: number): Promise<void> => {
     try {
         const response = await fetch(`${API_URL}/Delete/${bookId}`, {
             method: 'DELETE',
-            credentials: 'include'
+            // credentials: 'include'
         });
 
         if (!response.ok) {
