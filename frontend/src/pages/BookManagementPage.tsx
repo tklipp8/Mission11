@@ -43,7 +43,11 @@ function BookManagementPage() {
         e.preventDefault();
         try {
             if (editingBook) {
-                await updateBook(editingBook.bookID, formData as Book);
+                const updatedBook: Book = {
+                    ...formData,
+                    bookID: editingBook.bookID
+                } as Book;
+                await updateBook(editingBook.bookID, updatedBook);
             } else {
                 await addBook(formData as Book);
             }
