@@ -11,6 +11,11 @@ function BookList({selectedCategories}: {selectedCategories: string[]}) {
     const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc"); // Sorting order for books
     const navigate = useNavigate();
 
+    // Reset page number to 1 when categories change
+    useEffect(() => {
+        setPageNum(1);
+    }, [selectedCategories]);
+
     // Bring in the use effect, establish our url and other functions
     useEffect(() => {
         fetchBooks();
