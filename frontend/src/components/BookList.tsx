@@ -28,7 +28,7 @@ function BookList({selectedCategories}: {selectedCategories: string[]}) {
         );
         const data = await response.json();
         setBooks(data.books); // Update the books state with fetched data
-        setTotalPages(data.totalPages); // Update the total pages state
+        setTotalPages(Math.ceil(data.totalNumBooks / pageSize)); // Calculate total pages based on total books and page size
     };
 
     // Function to toggle sorting order
