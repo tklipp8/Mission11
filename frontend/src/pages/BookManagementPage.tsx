@@ -47,7 +47,7 @@ function BookManagementPage() {
                     title: formData.title || '',
                     author: formData.author || '',
                     publisher: formData.publisher || '',
-                    iSBN: formData.iSBN || '',
+                    iSBN: formData.iSBN || '0',
                     classification: formData.classification || '',
                     category: formData.category || '',
                     pageCount: Number(formData.pageCount) || 0,
@@ -60,7 +60,7 @@ function BookManagementPage() {
                     title: formData.title || '',
                     author: formData.author || '',
                     publisher: formData.publisher || '',
-                    iSBN: formData.iSBN || '',
+                    iSBN: formData.iSBN || '0',
                     classification: formData.classification || '',
                     category: formData.category || '',
                     pageCount: Number(formData.pageCount) || 0,
@@ -182,6 +182,7 @@ function BookManagementPage() {
                                         name="iSBN"
                                         value={formData.iSBN}
                                         onChange={handleInputChange}
+                                        required
                                     />
                                 </div>
                             </div>
