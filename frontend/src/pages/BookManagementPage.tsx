@@ -33,6 +33,7 @@ function BookManagementPage() {
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
+        console.log(`Input change - ${name}:`, value);
         setFormData(prev => ({
             ...prev,
             [name]: name === 'pageCount' || name === 'price' ? Number(value) : value
@@ -43,6 +44,7 @@ function BookManagementPage() {
         e.preventDefault();
         try {
             if (editingBook) {
+                console.log('Submitting edit with form data:', formData);
                 const updatedBook: Book = {
                     title: formData.title || '',
                     author: formData.author || '',
@@ -54,6 +56,7 @@ function BookManagementPage() {
                     price: Number(formData.price) || 0,
                     bookID: editingBook.bookID
                 };
+                console.log('Sending update request with:', updatedBook);
                 await updateBook(editingBook.bookID, updatedBook);
             } else {
                 const newBook: Book = {
@@ -88,12 +91,13 @@ function BookManagementPage() {
     };
 
     const handleEdit = (book: Book) => {
+        console.log('Editing book:', book);
         setEditingBook(book);
         setFormData({
             title: book.title || '',
             author: book.author || '',
             publisher: book.publisher || '',
-            iSBN: book.iSBN || '',
+            iSBN: book.iSBN || '0',
             classification: book.classification || '',
             category: book.category || '',
             pageCount: book.pageCount || 0,
