@@ -83,17 +83,20 @@ export const addBook = async (newBook: Book): Promise<Book> => {
 
 export const updateBook = async (bookId: number, updatedBook: Book): Promise<Book> => {
     try {
+        // Remove bookID from the body since it's in the URL
+        const { bookID, ...bookWithoutId } = updatedBook;
+        
         const response = await fetch(`${API_URL}/Update/${bookId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
-            // credentials: 'include',
-            body: JSON.stringify(updatedBook),
+            body: JSON.stringify(bookWithoutId),
         });
 
         if (!response.ok) {
-            throw new Error(`Failed to update book: ${response.statusText}`);
+            const errorText = await response.text();
+            throw new Error(`Failed to update book: ${errorText}`);
         }
 
         return await response.json();

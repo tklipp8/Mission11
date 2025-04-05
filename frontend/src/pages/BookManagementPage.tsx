@@ -44,12 +44,30 @@ function BookManagementPage() {
         try {
             if (editingBook) {
                 const updatedBook: Book = {
-                    ...formData,
+                    title: formData.title || '',
+                    author: formData.author || '',
+                    publisher: formData.publisher || '',
+                    iSBN: formData.iSBN || '',
+                    classification: formData.classification || '',
+                    category: formData.category || '',
+                    pageCount: Number(formData.pageCount) || 0,
+                    price: Number(formData.price) || 0,
                     bookID: editingBook.bookID
-                } as Book;
+                };
                 await updateBook(editingBook.bookID, updatedBook);
             } else {
-                await addBook(formData as Book);
+                const newBook: Book = {
+                    title: formData.title || '',
+                    author: formData.author || '',
+                    publisher: formData.publisher || '',
+                    iSBN: formData.iSBN || '',
+                    classification: formData.classification || '',
+                    category: formData.category || '',
+                    pageCount: Number(formData.pageCount) || 0,
+                    price: Number(formData.price) || 0,
+                    bookID: 0
+                };
+                await addBook(newBook);
             }
             resetForm();
             loadBooks();
